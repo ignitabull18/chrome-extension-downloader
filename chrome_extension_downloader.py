@@ -17,6 +17,8 @@ import urllib3
 import logging
 import json
 import time
+import zipfile
+import shutil
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -53,7 +55,9 @@ class Config:
             "output": {
                 "default_directory": "./downloads",
                 "auto_cleanup": True,
-                "create_subdirectories": True
+                "create_subdirectories": True,
+                "extract_directory": "/Users/ignitabull/Desktop/Development/Browser Extensions",
+                "auto_extract": True
             },
             "performance": {
                 "max_concurrent_downloads": 3,
@@ -240,6 +244,12 @@ class AutoExtensionDownloader:
             if self.config.config["security"]["check_file_integrity"]:
                 self._validate_zip_integrity(zip_file)
             
+            # Extract ZIP file if auto_extract is enabled
+            extracted_path = None
+            if self.config.config["output"]["auto_extract"]:
+                extracted_path = self._extract_zip(zip_file, extension_id, metadata)
+                logger.info(f"Extension extracted to: {extracted_path}")
+            
             # Clean up CRX file if requested
             if cleanup and self.config.config["output"]["auto_cleanup"]:
                 logger.info(f"Cleaning up CRX file: {crx_filename}")
@@ -247,6 +257,8 @@ class AutoExtensionDownloader:
                 logger.info("CRX file deleted")
             
             logger.info(f"Success! Extension downloaded and converted to: {zip_file}")
+            if extracted_path:
+                logger.info(f"Extension extracted to: {extracted_path}")
             return zip_file
             
         except Exception as e:
@@ -261,7 +273,6 @@ class AutoExtensionDownloader:
     def _validate_zip_integrity(self, zip_file: str):
         """Validate ZIP file integrity"""
         try:
-            import zipfile
             with zipfile.ZipFile(zip_file, 'r') as zf:
                 # Test the ZIP file
                 bad_file = zf.testzip()
@@ -271,6 +282,50 @@ class AutoExtensionDownloader:
         except Exception as e:
             logger.error(f"ZIP integrity validation failed: {e}")
             raise
+    
+    def _extract_zip(self, zip_file: str, extension_id: str, metadata: Dict[str, Any]) -> str:
+        """
+        Extract ZIP file to the configured extraction directory
+        
+        Args:
+            zip_file (str): Path to the ZIP file
+            extension_id (str): Chrome extension ID
+            metadata (Dict[str, Any]): Extension metadata
+            
+        Returns:
+            str: Path to the extracted directory
+        """
+        try:
+            extract_dir = Path(self.config.config["output"]["extract_directory"])
+            extract_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Create a safe directory name from extension name and ID
+            safe_name = "".join(c for c in metadata.get('name', extension_id) if c.isalnum() or c in (' ', '-', '_')).rstrip()
+            safe_name = safe_name.replace(' ', '_') if safe_name else extension_id
+            extension_folder_name = f"{safe_name}_{extension_id}"
+            
+            # Create the extension-specific directory
+            extension_dir = extract_dir / extension_folder_name
+            
+            # Remove existing directory if it exists
+            if extension_dir.exists():
+                logger.info(f"Removing existing directory: {extension_dir}")
+                shutil.rmtree(extension_dir)
+            
+            # Extract the ZIP file
+            logger.info(f"Extracting ZIP to: {extension_dir}")
+            with zipfile.ZipFile(zip_file, 'r') as zf:
+                zf.extractall(extension_dir)
+            
+            # Count extracted files
+            file_count = sum(1 for _ in extension_dir.rglob('*') if _.is_file())
+            logger.info(f"Extracted {file_count} files to {extension_dir}")
+            
+            return str(extension_dir)
+            
+        except Exception as e:
+            logger.error(f"Failed to extract ZIP file: {e}")
+            raise ValueError(f"Failed to extract extension: {e}")
     
     def _download_crx(self, download_url: str, show_progress: bool = True) -> Optional[bytes]:
         """Download CRX file from URL with retry logic and progress indication"""

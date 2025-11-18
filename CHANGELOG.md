@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Automatic ZIP extraction**: Extensions are now automatically extracted to a configurable directory after download
+  - New configuration options: `extract_directory` and `auto_extract` in `output` section
+  - Default extraction directory: `/Users/ignitabull/Desktop/Development/Browser Extensions`
+  - Extracted files are organized in folders named `{extension_name}_{extension_id}`
+  - Existing extraction directories are automatically removed before re-extraction
 - Initial project setup with CHANGELOG.md, CLAUDE.md, and updated AGENTS.md
 - Project documentation and rules files
 - Package management rule: Always use `uv` instead of `pip` for faster, more reliable installations

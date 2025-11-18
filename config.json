@@ -10,7 +10,9 @@
   "output": {
     "default_directory": "./downloads",
     "auto_cleanup": true,
-    "create_subdirectories": true
+    "create_subdirectories": true,
+    "extract_directory": "/Users/ignitabull/Desktop/Development/Browser Extensions",
+    "auto_extract": true
   },
   "performance": {
     "max_concurrent_downloads": 3,

@@ -4,7 +4,7 @@ This file provides essential context about the Chrome Extension Downloader proje
 
 ## Project Overview
 
-**Chrome Extension Downloader** is a Python 3.7+ tool that automatically downloads Chrome extensions from the Chrome Web Store, converts them from CRX to ZIP format, with automatic SSL bypass for better compatibility.
+**Chrome Extension Downloader** is a Python 3.7+ tool that automatically downloads Chrome extensions from the Chrome Web Store, converts them from CRX to ZIP format, and automatically extracts them to a specified directory, with automatic SSL bypass for better compatibility.
 
 ## Core Functionality
 
@@ -25,6 +25,7 @@ This file provides essential context about the Chrome Extension Downloader proje
 ### Key Features
 
 - **Single & Batch Downloads**: Download one or multiple extensions simultaneously
+- **Automatic ZIP Extraction**: Extracts downloaded extensions to a configurable directory automatically
 - **Configuration Management**: JSON-based configuration with sensible defaults
 - **Concurrent Processing**: Multi-threaded downloads with configurable limits
 - **Caching System**: Avoid re-downloading the same extensions
@@ -41,13 +42,14 @@ This file provides essential context about the Chrome Extension Downloader proje
 2. **Download**: Downloads CRX file with retry logic and progress tracking
 3. **Conversion**: Converts CRX format to ZIP (handles CRX2 and CRX3)
 4. **Validation**: Validates ZIP file integrity
-5. **Cleanup**: Optionally removes temporary CRX files
+5. **Extraction**: Automatically extracts ZIP to configured directory (if enabled)
+6. **Cleanup**: Optionally removes temporary CRX files
 
 ### Configuration System
 
 Configuration is managed via `config.json` with sections:
 - `download`: Timeouts, retries, SSL settings, user agent
-- `output`: Default directory, auto-cleanup, subdirectories
+- `output`: Default directory, auto-cleanup, subdirectories, extract_directory, auto_extract
 - `performance`: Concurrent downloads, chunk size, caching
 - `security`: Validation, integrity checks, rate limiting
 
