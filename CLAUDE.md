@@ -62,6 +62,15 @@ Configuration is managed via `config.json` with sections:
 
 ## Technical Details
 
+### Package Management
+
+**IMPORTANT: Always use `uv` instead of `pip`**
+- Install dependencies: `uv pip install -r requirements.txt`
+- Install new packages: `uv pip install <package>`
+- Update packages: `uv pip install --upgrade <package>`
+- Never use `pip` directly - always use `uv pip` or `uv` commands
+- `uv` provides faster, more reliable package installation
+
 ### Dependencies
 
 - `requests>=2.25.0` - HTTP requests
@@ -135,7 +144,8 @@ chrome-extension-downloader/
 2. **Keep files under 200 lines** when possible - split large files
 3. **Update AGENTS.md** if architectural decisions change
 4. **Maintain type hints** - this project uses Python 3.7+ typing
-5. **Test error handling** - the app handles many edge cases
+5. **Always use `uv` for package management** - never use `pip` directly
+6. **Test error handling** - the app handles many edge cases
 
 ### Code Style
 

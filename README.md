@@ -17,6 +17,10 @@ A **simple Python 3.7+** tool that automatically downloads Chrome extensions fro
 
 ### **Step 1: Install Requirements**
 ```bash
+# Using uv (recommended - faster and more reliable)
+uv pip install -r requirements.txt
+
+# Or using pip (if uv is not available)
 pip install -r requirements.txt
 ```
 
@@ -130,8 +134,8 @@ python crx_utils.py --id gppongmhjkpfnbhagpmjfkannfbllamg --os linux --arch x86-
 git clone https://github.com/your-username/chrome-extension-downloader.git
 cd chrome-extension-downloader
 
-# Install dependencies
-pip install -r requirements.txt
+# Install dependencies (using uv - recommended)
+uv pip install -r requirements.txt
 ```
 
 #### **Simple Usage**
@@ -195,7 +199,7 @@ python chrome_extension_downloader.py <extension_id>
 python --version
 
 # Step 2: Install requirements (if not done already)
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 
 # Step 3: Download and convert extension
 python chrome_extension_downloader.py gppongmhjkpfnbhagpmjfkannfbllamg
@@ -248,7 +252,7 @@ This tool is for educational and personal use. Please respect Chrome Web Store t
 This is a simple, lightweight tool focused on core functionality. For development:
 
 1. Clone the repository
-2. Install requirements: `pip install -r requirements.txt`
+2. Install requirements: `uv pip install -r requirements.txt` (or `pip install -r requirements.txt` if uv is not available)
 3. Run the script: `python chrome_extension_downloader.py <extension_id>`
 
 ## 📊 Project Status

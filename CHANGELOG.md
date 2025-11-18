@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial project setup with CHANGELOG.md, CLAUDE.md, and updated AGENTS.md
 - Project documentation and rules files
+- Package management rule: Always use `uv` instead of `pip` for faster, more reliable installations
 
 ## [1.0.0] - Initial Release
 

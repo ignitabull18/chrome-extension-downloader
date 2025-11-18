@@ -61,6 +61,15 @@ You `MUST` always use this tool when:
 4. **Configuration**: Centralize in `Config` class, use `config.json`
 5. **File Operations**: Use `pathlib.Path` for file paths
 
+### Package Management
+
+**ALWAYS use `uv` instead of `pip`** for all package management operations:
+- Install dependencies: `uv pip install -r requirements.txt`
+- Install new packages: `uv pip install <package>`
+- Update packages: `uv pip install --upgrade <package>`
+- Never use `pip` directly - always use `uv pip` or `uv` commands
+- This ensures faster, more reliable package installation
+
 ### Testing Considerations
 
 - Test with valid extension IDs (32 chars, a-p only)
@@ -76,9 +85,10 @@ You `MUST` always use this tool when:
 1. Check `CLAUDE.md` for project context
 2. Use `byterover-retrieve-knowledge` to check for existing patterns
 3. Follow existing code style and structure
-4. Update `CHANGELOG.md` with changes
-5. Update `CLAUDE.md` if architecture changes
-6. Use `byterover-store-knowledge` to save new patterns
+4. **Use `uv` for any package management** (never use `pip` directly)
+5. Update `CHANGELOG.md` with changes
+6. Update `CLAUDE.md` if architecture changes
+7. Use `byterover-store-knowledge` to save new patterns
 
 #### Error Handling Pattern
 
