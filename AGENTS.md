@@ -70,6 +70,18 @@ You `MUST` always use this tool when:
 - Never use `pip` directly - always use `uv pip` or `uv` commands
 - This ensures faster, more reliable package installation
 
+### Virtual Environment
+
+**IMPORTANT: A virtual environment already exists at `.venv/`**
+- The project has a pre-configured virtual environment created with `uv venv`
+- **DO NOT create a new virtual environment** - use the existing one
+- To activate: `source .venv/bin/activate` (on macOS/Linux) or `.venv\Scripts\activate` (on Windows)
+- When running Python commands, either:
+  - Activate the environment first: `source .venv/bin/activate && python chrome_extension_downloader.py`
+  - Or use the venv Python directly: `.venv/bin/python chrome_extension_downloader.py`
+- The `.venv/` directory is already in `.gitignore` - do not commit it
+- If you need to recreate the environment (not recommended), use: `uv venv`
+
 ### Testing Considerations
 
 - Test with valid extension IDs (32 chars, a-p only)
@@ -119,11 +131,12 @@ if args.custom_value:
 
 ### Important Notes
 
-1. **SSL Verification**: Disabled by default for corporate compatibility
-2. **Extension ID Validation**: Always validate before processing
-3. **File Size Limits**: Enforced via config (default 100MB)
-4. **Retry Logic**: 3 attempts with exponential backoff
-5. **Platform Detection**: Auto-detects OS and architecture
+1. **Virtual Environment**: A `.venv/` directory already exists - use it, don't create a new one
+2. **SSL Verification**: Disabled by default for corporate compatibility
+3. **Extension ID Validation**: Always validate before processing
+4. **File Size Limits**: Enforced via config (default 100MB)
+5. **Retry Logic**: 3 attempts with exponential backoff
+6. **Platform Detection**: Auto-detects OS and architecture
 
 ### Project Status
 

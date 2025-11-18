@@ -71,6 +71,16 @@ Configuration is managed via `config.json` with sections:
 - Never use `pip` directly - always use `uv pip` or `uv` commands
 - `uv` provides faster, more reliable package installation
 
+### Virtual Environment
+
+**A virtual environment already exists at `.venv/`**
+- The project has a pre-configured virtual environment created with `uv venv`
+- **DO NOT create a new virtual environment** - use the existing `.venv/` directory
+- To activate: `source .venv/bin/activate` (macOS/Linux) or `.venv\Scripts\activate` (Windows)
+- When running commands, either activate first or use: `.venv/bin/python chrome_extension_downloader.py`
+- The `.venv/` directory is in `.gitignore` and should not be committed
+- All dependencies are already installed in this environment
+
 ### Dependencies
 
 - `requests>=2.25.0` - HTTP requests
@@ -125,6 +135,7 @@ result = downloader.download_and_convert("gppongmhjkpfnbhagpmjfkannfbllamg")
 
 ```
 chrome-extension-downloader/
+├── .venv/                            # Virtual environment (already created, use this)
 ├── chrome_extension_downloader.py    # Main script
 ├── crx_utils.py                      # Core utilities
 ├── config.json                       # Configuration file
@@ -145,7 +156,8 @@ chrome-extension-downloader/
 3. **Update AGENTS.md** if architectural decisions change
 4. **Maintain type hints** - this project uses Python 3.7+ typing
 5. **Always use `uv` for package management** - never use `pip` directly
-6. **Test error handling** - the app handles many edge cases
+6. **Use the existing `.venv/` virtual environment** - do not create a new one
+7. **Test error handling** - the app handles many edge cases
 
 ### Code Style
 
